@@ -40,17 +40,24 @@ function getVehicleInfo(event){
 // Outputs HTML for progress bars
 function getProgressBarDisplay(progressVal, nameOfRating){
   var ratingVal = parseInt(progressVal);
-  var progressBar = '<h5>' + nameOfRating + '</h5>';
-  switch(ratingVal){
-    case 5:
-    case 4:
-      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
-      break;
-    case 3:
-      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
-      break;
-    default:
-      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+  var progressbar = '';
+
+  progressBar = '<h5>' + nameOfRating + '</h5>';
+  if(isNaN(ratingVal)){
+  //  progressbar += '<h5> Why <span class="label label-warning">Rating Unavailable</span> </h5>';
+  }
+  else{
+    switch(ratingVal){
+      case 5:
+      case 4:
+        progressBar += '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+        break;
+      case 3:
+        progressBar += '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+        break;
+      default:
+        progressBar += '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+    }
   }
   return progressBar;
 }
@@ -71,7 +78,12 @@ function displayVehicleInfo(info){
   var vehicleOutputTitle = '<div class="panel panel-primary"> <div class="panel-heading">' + (info.VehicleDescription) + '</div>';
 
   // Vehicle Image
-  var vehicleImage = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + (info.VehiclePicture) + ' alt="Picture Not Available"> </div> <div class="col-md-3"> </div> </div>' ;
+  var vehicleImage = '';
+  console.log((info.VehiclePicture));
+  if (typeof info.VehiclePicture != 'undefined')
+    vehicleImage = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + (info.VehiclePicture) + ' alt="Picture Not Available"> </div> <div class="col-md-3"> </div> </div>';
+  else
+    vehicleImage = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <span class="glyphicon glyphicon-camera"></span> </div> <div class="col-md-3"> </div> </div>';
   vehicleImage = '<div class="jumbotron">' + vehicleImage + '</div>';
 
   // All Output Counts
