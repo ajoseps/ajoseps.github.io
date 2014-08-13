@@ -2,9 +2,9 @@ $( document ).ready(function() {
   yearSelect();
 });
 
-$('#make-select').click(makeSelect);
+//$('#make-select').click(makeSelect);
 
-$('#model-select').click(modelSelect);
+//$('#model-select').click(modelSelect);
 
 $('#specific-model-select').click(specificModelSelect);
 
