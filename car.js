@@ -42,7 +42,10 @@ function displayVehicleInfo(info){
   console.log(info);
   $('#vehicle-info').children().remove();
   $.each(info, function(key,val){
-    if(!(/(Video)$/.test(key))){
+    if(/(ModelYear)$/.test(key)){
+      return false;
+    }
+    else if(!(/(Video)$/.test(key))){
       var listItemHeading = '<h4 class="list-group-item-heading">' + key.replace(/([a-z])([A-Z])/g, '$1 $2') + '</h4>';
       $('#vehicle-info').append(listItemHeading);
     }
@@ -62,6 +65,7 @@ function displayVehicleInfo(info){
     else
       listItemText = '<p class="list-group-item-text">' + val + '</p>';
     $('#vehicle-info').append(listItemText);
+    return true;
   });
 }
 
