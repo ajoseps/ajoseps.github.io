@@ -37,38 +37,98 @@ function getVehicleInfo(event){
   });
 }
 
+// Outputs HTML for progress bars
+function getProgressBarDisplay(progressVal, nameOfRating){
+  var ratingVal = parseInt(progressVal);
+  var progressBar = '<h5>' + nameOfRating + '</h5>';
+  switch(ratingVal){
+    case 5:
+    case 4:
+      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+      break;
+    case 3:
+      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+      break;
+    default:
+      progressBar += '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ ratingVal + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (ratingVal/5.0)*100 + '%;">' + ratingVal + '</div> </div>';
+  }
+  return progressBar;
+}
+
+// Outputs HTML for Badges
+function getBadgeDisplay(name, val){
+  var output = '<li class="active"> <a href="#"> <span class="badge pull-right">'+val+'</span>'+name+'</a></li>';
+  return output;
+}
+
 // Output Vehicle Info to site
 function displayVehicleInfo(info){
   console.log(info);
   $('#vehicle-info').children().remove();
-  $.each(info, function(key,val){
-    if(/(ModelYear)$/.test(key)){
-      return false;
-    }
-    else if(!(/(Video)$/.test(key))){
-      var listItemHeading = '<h4 class="list-group-item-heading">' + key.replace(/([a-z])([A-Z])/g, '$1 $2') + '</h4>';
-      $('#vehicle-info').append(listItemHeading);
-    }
-    var listItemText = '';
-    if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(val))
-      listItemText = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + val + ' alt=' + key + '> </div> <div class="col-md-3"> </div> </div>' ;
-    else if(/(Rating|Rating2)$/.test(key) && $.isNumeric(val) && val <= 5){
-      if(val >= 4)
-        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
-      else if(val == 3)
-        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
-      else
-        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
-    }
-    else if(/(wmv)$/.test(val))
-      listItemText = '';
-    else
-      listItemText = '<p class="list-group-item-text">' + val + '</p>';
-    $('#vehicle-info').append(listItemText);
-    return true;
-  });
-}
+  console.log(info);
 
+  // Vehicle Title
+  var vehicleOutputTitle = '<div class="panel panel-primary"> <div class="panel-heading">' + (info.VehicleDescription) + '</div>';
+
+  // Vehicle Image
+  var vehicleImage = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + (info.VehiclePicture) + ' alt="Picture Not Available"> </div> <div class="col-md-3"> </div> </div>' ;
+  vehicleImage = '<div class="jumbotron">' + vehicleImage + '</div>';
+
+  // All Output Counts
+  var counts = '<div id="counts" class="row"> <div class="col-md-1"> </div>  <div id="container" class="col-md-10"> <ul class="nav nav-pills nav-stacked">';
+  counts += getBadgeDisplay('Complaints Count', info.ComplaintsCount);
+  counts += getBadgeDisplay('Investigation Count', info.InvestigationCount);
+  counts += getBadgeDisplay('Recalls Count', info.RecallsCount); 
+  counts += '</ul>';
+
+  // All Crash Ratings
+  var crashRatings =  '<div id="crash-ratings" class="panel panel-info"> <div class="panel-heading">Crash Ratings</div>';
+  crashRatings += getProgressBarDisplay(info.OverallRating,'Overall Rating');
+  crashRatings += getProgressBarDisplay(info.OverallFrontCrashRating,'Overall Front Crash Rating');
+  crashRatings += getProgressBarDisplay(info.FrontCrashDriversideRating,'Front Crash Driverside Rating');
+  crashRatings += getProgressBarDisplay(info.FrontCrashPassengersideRating,'Front Crash Passengerside Rating');
+  crashRatings += getProgressBarDisplay(info.OverallSideCrashRating,'Overall Side Crash Rating');
+  crashRatings += getProgressBarDisplay(info.OverallRating,'Side Crash DriversideRating');
+  crashRatings += getProgressBarDisplay(info.OverallRating,'Side Crash Passengerside Rating');
+  crashRatings += getProgressBarDisplay(info.RolloverRating,'Rollover Ratings');
+  crashRatings += '</div> <div class="col-md-1"> </div> </div></div>';
+
+  var vehicleOutputBodyInfo = vehicleImage + counts + crashRatings;
+  var vehiclePanelBody = '<div class="panel-body">' + vehicleOutputBodyInfo + '</div>'
+  var output = vehicleOutputTitle + vehiclePanelBody;
+
+  $('#vehicle-info').append(output + '</div>');
+
+  // $.each(info, function(key,val){
+  //   if(/(ModelYear)$/.test(key)){
+  //     return false;
+  //   }
+  //   else if(!(/(Video)$/.test(key))){
+  //     var listItemHeading = '<h4 class="list-group-item-heading">' + key.replace(/([a-z])([A-Z])/g, '$1 $2') + '</h4>';
+  //     $('#vehicle-info').append(listItemHeading);
+  //   }
+  //   var listItemText = '';
+  //   if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(val))
+  //     listItemText = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + val + ' alt=' + key + '> </div> <div class="col-md-3"> </div> </div>' ;
+  //   else if(/(Rating|Rating2)$/.test(key) && $.isNumeric(val) && val <= 5){
+  //     if(val >= 4)
+  //       listItemText = '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+  //     else if(val == 3)
+  //       listItemText = '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+  //     else
+  //       listItemText = '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+  //   }
+  //   else if($.isNumeric(val)){
+  //     listItemText = '<span class="label label-primary">' + val + '</span>';
+  //   }
+  //   else if(/(wmv)$/.test(val))
+  //     listItemText = '';
+  //   else
+  //     listItemText = '<p class="list-group-item-text">' + val + '</p>';
+  //   $('#vehicle-info').append(listItemText);
+  //   return true;
+  // });
+}
 
 // List Item Creation Functions
 function yearSelect(){ createListItems('ModelYear','#year-select'); }
@@ -153,7 +213,7 @@ function createListItems(param,id){
   var requestURL = formatRequestToAPI(param);
   sendRequestToApi(requestURL, param, function(dropdownItems){
     $(id).children().remove();
-      $.each(dropdownItems, function(index,value){
+    $.each(dropdownItems, function(index,value){
         $(id).append(value);
       });
     });
