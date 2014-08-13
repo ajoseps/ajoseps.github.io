@@ -42,15 +42,29 @@ function displayVehicleInfo(info){
   console.log(info);
   $('#vehicle-info').children().remove();
   $.each(info, function(key,val){
-    var listItemHeading = '<h4 class="list-group-item-heading">' + key + '</h4>';
-    $('#vehicle-info').append(listItemHeading);
+    if(!(/(Video)$/.test(key))){
+      var listItemHeading = '<h4 class="list-group-item-heading">' + key.replace(/([a-z])([A-Z])/g, '$1 $2') + '</h4>';
+      $('#vehicle-info').append(listItemHeading);
+    }
+    var listItemText = '';
     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(val))
-      var listItemText = '<img src=' + val + ' alt=' + key + '>'
+      listItemText = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + val + ' alt=' + key + '> </div> <div class="col-md-3"> </div> </div>' ;
+    else if(/(Rating)$/.test(key) && $.isNumeric(val) && val <= 5){
+      if(val >= 4)
+        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+      else if(val == 3)
+        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+      else
+        listItemText = '<div class="progress"> <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
+    }
+    else if(/(wmv)$/.test(val))
+      listItemText = '';
     else
-      var listItemText = '<p class="list-group-item-text">' + val + '</p>';
+      listItemText = '<p class="list-group-item-text">' + val + '</p>';
     $('#vehicle-info').append(listItemText);
   });
 }
+
 
 // List Item Creation Functions
 function yearSelect(){ createListItems('ModelYear','#year-select'); }
