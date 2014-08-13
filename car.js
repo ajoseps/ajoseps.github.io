@@ -52,7 +52,7 @@ function displayVehicleInfo(info){
     var listItemText = '';
     if (/(jpg|gif|png|JPG|GIF|PNG|JPEG|jpeg)$/.test(val))
       listItemText = '<div class="row"> <div class="col-md-3"> </div>  <div id="container" class="col-md-6"> <img src=' + val + ' alt=' + key + '> </div> <div class="col-md-3"> </div> </div>' ;
-    else if(/(Rating)$/.test(key) && $.isNumeric(val) && val <= 5){
+    else if(/(Rating|Rating2)$/.test(key) && $.isNumeric(val) && val <= 5){
       if(val >= 4)
         listItemText = '<div class="progress"> <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow='+ val + ' aria-valuemin="0" aria-valuemax="5" style="width:' + (val/5.0)*100 + '%;">' + val + '</div> </div>';
       else if(val == 3)
