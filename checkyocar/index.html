@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check Yo Car!</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="row">
+      <div class='col-md-3'>
+      </div>
+
+      <div class='col-md-6'>
+        <div class="page-header">
+          <h1>Check Yo Car!<small>Data from <a href="http://www.nhtsa.gov/">NHTSA</a></small></h1>
+        </div>
+
+        <div>
+          <form id="car-selection-form">
+              <!--Primary buttons with dropdown menu-->
+                  <div class="btn-group btn-group-justified">
+                    <div class="btn-group">
+                      <select id='year-select' class='form-control'></select>
+                    </div>
+                    <div class="btn-group">
+                      <select id='make-select' class='form-control'></select>
+                    </div>
+                    <div class="btn-group">
+                      <select id='model-select' class='form-control'></select>
+                    </div>
+                    <div class="btn-group">
+                      <select id='specific-model-select' class='form-control'></select>
+                    </div>
+                    <div class="btn-group">
+                      <button type='submit' id='get-info-button' class="btn btn-primary">Get Vehicle Info</button>
+                    </div>
+                  </div>
+          </form>
+        </div>
+
+        <div class="list-group">
+          <a id='vehicle-info' href="#" class="list-group-item">
+          </a>
+        </div>
+      </div>
+    <div class='col-md-3'>
+      </div>
+  </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="car.js"></script>
+  </body>
+</html>
