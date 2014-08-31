@@ -1,0 +1,25 @@
+html, body, .container-fluid, .container-fluid .row-fluid, .container-fluid .row-fluid .span9, .container-fluid .row-fluid .span3
+{
+	height: 100%;
+}
+
+#messages{
+	height: 100%;
+	position: relative;
+}
+
+#chatPanel{
+	height: 100%;
+	position: relative;
+}
+
+#messagesInputDiv{
+	position: relative;
+	float: bottom;
+}
+
+#roomInit{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+}
