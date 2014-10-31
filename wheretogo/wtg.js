@@ -1,6 +1,6 @@
 var myDataRef = new Firebase('https://sizzling-torch-2010.firebaseio.com/');
 var url = "https://www.google.com/maps/embed/v1/search?key=AIzaSyAxAvRtYi2wDIlHg5bQk8LsVaUz0ktFIco";
-var currenUrl = "http://arunjoseph.net/wheretogo/room.html"
+var currenUrl = window.location.pathname;
 var session = '';
 
 
@@ -96,12 +96,13 @@ function loadRoom(exists, roomID){
     myDataRef.child("query").once('value', function(snapshot){
       updateMap(snapshot);
     })
-
+/*
     // Load Existing Messages
     myDataRef.child("conversation").once('child_added', function(snapshot){
       var message = snapshot.val();
       displayChatMessage(message.name, message.text);
     });
+*/
   }
 
   // Initalizes Map
