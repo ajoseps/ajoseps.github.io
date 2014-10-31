@@ -1,6 +1,6 @@
 var myDataRef = new Firebase('https://sizzling-torch-2010.firebaseio.com/');
 var url = "https://www.google.com/maps/embed/v1/search?key=AIzaSyAxAvRtYi2wDIlHg5bQk8LsVaUz0ktFIco";
-var currenUrl = window.location.pathname;
+var currentUrl = window.location.pathname;
 var session = '';
 
 
@@ -119,5 +119,5 @@ function loadRoom(exists, roomID){
 
 // Prompts user to copy link to current room to clipboard to share
 function copyToClipboard() {
-  window.prompt("Copy Link to Room: Ctrl+C, Enter", currenUrl + "?roomID=" + session);
+  window.prompt("Copy Link to Room: Ctrl+C, Enter", "arunjoseph.net" + currentUrl + "?roomID=" + session);
 }
