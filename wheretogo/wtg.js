@@ -119,5 +119,6 @@ function loadRoom(exists, roomID){
 
 // Prompts user to copy link to current room to clipboard to share
 function copyToClipboard() {
+ // console.log("arunjoseph.net" + currentUrl + "?roomID=" + session);
   window.prompt("Copy Link to Room: Ctrl+C, Enter", "arunjoseph.net" + currentUrl + "?roomID=" + session);
 }
